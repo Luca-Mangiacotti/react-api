@@ -1,4 +1,7 @@
-import { useState } from "react";
+//importiamo useEffect da React per gestire il rendering della ui
+import { useState, useEffect } from "react";
+//importiamo axios per effettuare chiamate ad un server
+import axios from "axios";
 const initialList = [
   {
     id: 1,
@@ -19,7 +22,7 @@ export default function App() {
     category: "",
     available: false,
   });
-  const [PostList, setPostList] = useState(initialList);
+  const [PostList, setPostList] = useState([]);
   //inserimento funzione per eliminazione di un post dalla lista
   const handleDelete = (postToDelete) => {
     setPostList((currentPost) =>
@@ -64,7 +67,26 @@ export default function App() {
     console.log(PostList);
   };
 
+  //funzione che effettua la chiamata al nostro local host che contiene i dati da visualizzare
+  //salviamo i dati ottenuti nella nostra lista creata con useState
+  const fetchPosts = () => {
+    axios.get("http://127.0.0.1:3001/posts").then(function (res) {
+      setPostList(res.data);
+      // console.log(res.data);
+    });
+  };
+
+  //utilizziamo useEffect per richiamare la funzione di restituzione dei post all'avvio della pagina UI
+  useEffect(fetchPosts, []);
+
   return (
+    // <>
+    //   <ul>
+    //     {PostList.map((post) => (
+    //       <li key={post.id}>{post.title}</li>
+    //     ))}
+    //   </ul>
+    // </>
     <section className="container">
       <div className="listContainer">
         <h1>Lista dei Post </h1>
@@ -125,8 +147,8 @@ export default function App() {
             <option value="Dolci">Dolci</option>
           </select>
 
-          {/* quando vogliamo utilizzare lo stato di una checkbox accediamo al suo contenuto tramite: event.target.checked 
-              che restituirà un valore booleano*/}
+          {/* quando vogliamo utilizzare lo stato di una checkbox accediamo al suo contenuto tramite: event.target.checked
+            che restituirà un valore booleano*/}
           <label htmlFor="public">Pubblicato </label>
           <input
             id="public"

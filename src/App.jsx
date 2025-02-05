@@ -23,12 +23,6 @@ export default function App() {
     available: false,
   });
   const [PostList, setPostList] = useState([]);
-  //inserimento funzione per eliminazione di un post dalla lista
-  const handleDelete = (postToDelete) => {
-    setPostList((currentPost) =>
-      currentPost.filter((post) => post !== postToDelete)
-    );
-  };
 
   //funzioni di controllo per il form
   //funzione per la raccolta dati dai campi input
@@ -76,21 +70,26 @@ export default function App() {
     });
   };
 
-  // const fetchDeletePost = (postID) =>{
-  //   axios.delete(`http://127.0.0.1:3001/posts/:${postID}`)
-  // }
+  //inserimento funzione per eliminazione di un post dalla lista
+  const handleDelete = (postToDelete) => {
+    setPostList((currentPost) =>
+      currentPost.filter((post) => post !== postToDelete)
+    );
+  };
 
-  //utilizziamo useEffect per richiamare la funzione di restituzione dei post all'avvio della pagina UI
+  //funzione di fetch per eliminare un post dalla lista del nostro server
+  const fetchDeletePost = (post) => {
+    axios.delete(`http://127.0.0.1:3001/posts/${post.id}`).then(function (res) {
+      console.log(`eliminato${res.data}`);
+      //richiamiamo la funzione handleDelete per sincronizzare la UI eliminando l'elemento dalla pagina
+      handleDelete(post);
+    });
+  };
+
+  //utilizziamo useEffect per richiamare la funzione di restituzione dei post 1 volta all'avvio della pagina UI
   useEffect(fetchPosts, []);
 
   return (
-    // <>
-    //   <ul>
-    //     {PostList.map((post) => (
-    //       <li key={post.id}>{post.title}</li>
-    //     ))}
-    //   </ul>
-    // </>
     <section className="container">
       <div className="listContainer">
         <h1>Lista dei Piatti </h1>
@@ -117,7 +116,8 @@ export default function App() {
                   ))}
                 </div>
               </div>
-              <button onClick={() => handleDelete(currentPost)}>
+              {/* {al click del bottone per eliminare un post richiamiamo la funzione di fetch per eliminare il post} */}
+              <button onClick={() => fetchDeletePost(currentPost)}>
                 &#128465;
               </button>
             </li>

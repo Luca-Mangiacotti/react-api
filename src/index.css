@@ -52,7 +52,7 @@ h1 {
 -----------------------*/
 ul {
   list-style: none;
-  max-width: 800px;
+  max-width: 600px;
   overflow: hidden;
 }
 
@@ -84,6 +84,12 @@ li .notAvaible {
 .prodTags p {
   padding-right: 6px;
   text-transform: uppercase;
+}
+
+.imgPost {
+  max-width: 200px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 button {

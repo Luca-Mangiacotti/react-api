@@ -2,16 +2,6 @@
 import { useState, useEffect } from "react";
 //importiamo axios per effettuare chiamate ad un server
 import axios from "axios";
-const initialList = [
-  {
-    id: 1,
-    title: "Ciambellone",
-    content:
-      "Sarà che una volta le cose erano più semplici, ma erano anche molto buone. Come le crostate, i biscotti o il ciambellone che la nonna preparava anche all'ultimo sapendo che sareste passati per la merenda: uova, zucchero e farina. Niente di più basic ma che tra le sue mani, mescolando e infornando, diventava una delle prelibatezze per accompagnare il succo di frutta al pomeriggio o il latte e caffè al mattino. Ecco la nostra ricetta del ciambellone a quale atmosfera si ispira, quella di casa e genuinità: con una manciata di scorze di limone o di arancia e una spolverata di zucchero a velo renderete questa soffice delizia profumata e invitante. E per una volta sarà la nonna a farvi i complimenti per aver preparato un morbido ciambellone, così buono che non passa mai di moda!",
-    image: "/imgs/posts/ciambellone.avif",
-    tags: ["Dolci", "Torte", "Ricette vegetariane", "Ricette al forno"],
-  },
-];
 
 export default function App() {
   const [formData, setFormData] = useState({
@@ -100,7 +90,11 @@ export default function App() {
                 <h3>{currentPost.title}:</h3>
                 <div>{currentPost.content}</div>
 
-                <img src={currentPost.image} alt={currentPost.title} />
+                <img
+                  className="imgPost"
+                  src={`http://127.0.0.1:3001/${currentPost.image}`}
+                  alt={currentPost.title}
+                />
 
                 <div>{currentPost.category}</div>
                 <div>

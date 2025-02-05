@@ -76,6 +76,10 @@ export default function App() {
     });
   };
 
+  // const fetchDeletePost = (postID) =>{
+  //   axios.delete(`http://127.0.0.1:3001/posts/:${postID}`)
+  // }
+
   //utilizziamo useEffect per richiamare la funzione di restituzione dei post all'avvio della pagina UI
   useEffect(fetchPosts, []);
 
@@ -89,19 +93,30 @@ export default function App() {
     // </>
     <section className="container">
       <div className="listContainer">
-        <h1>Lista dei Post </h1>
+        <h1>Lista dei Piatti </h1>
         <ul>
           {PostList.map((currentPost) => (
             <li key={currentPost.id}>
-              <span>
-                <strong>{currentPost.title}</strong>:{currentPost.content}(
-                {currentPost.category})
-                {currentPost.available ? (
-                  <u> Disponibile </u>
-                ) : (
-                  <u className="notAvaible"> Non Disponibile </u>
-                )}
-              </span>
+              <div className="card">
+                <h3>{currentPost.title}:</h3>
+                <div>{currentPost.content}</div>
+
+                <img src={currentPost.image} alt={currentPost.title} />
+
+                <div>{currentPost.category}</div>
+                <div>
+                  {currentPost.available ? (
+                    <u> Disponibile </u>
+                  ) : (
+                    <u className="notAvaible"> Non Disponibile </u>
+                  )}
+                </div>
+                <div className="prodTags">
+                  {currentPost.tags.map((tag, index) => (
+                    <p key={index}>#{tag}</p>
+                  ))}
+                </div>
+              </div>
               <button onClick={() => handleDelete(currentPost)}>
                 &#128465;
               </button>
@@ -113,7 +128,7 @@ export default function App() {
       <br />
 
       <div className="formContainer">
-        <h1>Inserisci nuovo Programmatore</h1>
+        <h1>Inserisci nuovo Piatto</h1>
         <form onSubmit={handleFormSubmit}>
           <input
             id="title"

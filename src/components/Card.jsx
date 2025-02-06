@@ -7,7 +7,7 @@ export default function Card({ currentPost }) {
 
         <img
           className="imgPost"
-          src={`http://127.0.0.1:3001/${currentPost.image}`}
+          src={currentPost.image}
           alt={currentPost.title}
         />
 

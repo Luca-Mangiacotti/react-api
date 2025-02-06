@@ -142,7 +142,6 @@ export default function App() {
             onChange={(event) =>
               handleFormData("available", event.target.checked)
             }
-            required
           />
           <br />
 

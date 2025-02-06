@@ -21,11 +21,7 @@ export default function Card({ currentPost }) {
         </div>
 
         <div className="prodTags">
-          {currentPost.tags ? (
-            currentPost.tags.map((tag, index) => <p key={index}>#{tag}</p>)
-          ) : (
-            <p></p>
-          )}
+          {currentPost.tags ? <p>#{currentPost.tags.join(" #")} </p> : <p></p>}
         </div>
       </div>
     </li>

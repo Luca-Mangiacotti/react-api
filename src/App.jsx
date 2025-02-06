@@ -78,7 +78,7 @@ export default function App() {
               <Card key={currentPost.id} currentPost={currentPost} />
               <button onClick={() => fetchDeletePost(currentPost)}>
                 cancella{" "}
-                <strong className="btnTitle">{currentPost.title}</strong>{" "}
+                <strong className="btnTitle">{currentPost.title}</strong>
                 &#128465;
               </button>
             </div>

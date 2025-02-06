@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 //importiamo axios per effettuare chiamate ad un server
 import axios from "axios";
+import Card from "./components/Card";
 
 export default function App() {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ export default function App() {
     //creo una variabile che conterrà tutte le informazioni del nuovo autore da aggiungere alla lista
     //usiamo lenght sull'array per ricavarci il numero di id da attribuire al nuovo autore
     const newpost = {
-      id: PostList[PostList.length - 1].id + 1,
+      // id: PostList[PostList.length - 1].id + 1,
       title: formData.title,
       content: formData.content,
       image: formData.image,
@@ -37,6 +38,13 @@ export default function App() {
     };
 
     console.log(newpost);
+
+    // const fetchStorePost = (newpost) => {
+    //   axios.post("http://127.0.0.1:3001/posts").then(function (res) {
+    //     console.log(res.data);
+    //     console.log("registrato");
+    //   });
+    // };
 
     setPostList((currentList) => [...currentList, newpost]);
 
@@ -66,7 +74,6 @@ export default function App() {
       currentPost.filter((post) => post !== postToDelete)
     );
   };
-
   //funzione di fetch per eliminare un post dalla lista del nostro server
   const fetchDeletePost = (post) => {
     axios.delete(`http://127.0.0.1:3001/posts/${post.id}`).then(function (res) {
@@ -83,38 +90,10 @@ export default function App() {
     <section className="container">
       <div className="listContainer">
         <h1>Lista dei Piatti </h1>
+
         <ul>
           {PostList.map((currentPost) => (
-            <li key={currentPost.id}>
-              <div className="card">
-                <h3>{currentPost.title}:</h3>
-                <div>{currentPost.content}</div>
-
-                <img
-                  className="imgPost"
-                  src={`http://127.0.0.1:3001/${currentPost.image}`}
-                  alt={currentPost.title}
-                />
-
-                <div>{currentPost.category}</div>
-                <div>
-                  {currentPost.available ? (
-                    <u> Disponibile </u>
-                  ) : (
-                    <u className="notAvaible"> Non Disponibile </u>
-                  )}
-                </div>
-                <div className="prodTags">
-                  {currentPost.tags.map((tag, index) => (
-                    <p key={index}>#{tag}</p>
-                  ))}
-                </div>
-              </div>
-              {/* {al click del bottone per eliminare un post richiamiamo la funzione di fetch per eliminare il post} */}
-              <button onClick={() => fetchDeletePost(currentPost)}>
-                &#128465;
-              </button>
-            </li>
+            <Card key={currentPost.id} currentPost={currentPost} />
           ))}
         </ul>
       </div>

@@ -77,7 +77,7 @@ export default function App() {
             <div className="cardContainer" key={currentPost.id}>
               <Card key={currentPost.id} currentPost={currentPost} />
               <button onClick={() => fetchDeletePost(currentPost)}>
-                cancella{" "}
+                cancella
                 <strong className="btnTitle">{currentPost.title}</strong>
                 &#128465;
               </button>
@@ -115,6 +115,7 @@ export default function App() {
           <br />
           <input
             type="text"
+            id="image"
             value={formData.image}
             onChange={(event) => handleFormData("image", event.target.value)}
             placeholder="inserisci un url per il tuo piatto "
@@ -134,7 +135,7 @@ export default function App() {
 
           {/* quando vogliamo utilizzare lo stato di una checkbox accediamo al suo contenuto tramite: event.target.checked
             che restituirà un valore booleano*/}
-          <label htmlFor="public">Pubblicato </label>
+          <label htmlFor="public">Disponibile </label>
           <input
             id="public"
             type="checkbox"

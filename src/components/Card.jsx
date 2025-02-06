@@ -3,7 +3,7 @@ export default function Card({ currentPost }) {
     <li>
       <div className="card">
         <h3>{currentPost.title}:</h3>
-        <div>{currentPost.content}</div>
+        <div id="postContent">{currentPost.content}</div>
 
         <img
           className="imgPost"
@@ -14,9 +14,13 @@ export default function Card({ currentPost }) {
         <div>{currentPost.category}</div>
         <div>
           {currentPost.available ? (
-            <u> Disponibile </u>
+            <p>
+              &#x2705; <u>Disponibile</u>
+            </p>
           ) : (
-            <u className="notAvaible"> Non Disponibile </u>
+            <p>
+              &#x274C; <u className="notAvaible">Non Disponibile</u>
+            </p>
           )}
         </div>
 

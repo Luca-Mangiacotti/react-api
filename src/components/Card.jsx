@@ -21,13 +21,13 @@ export default function Card({ currentPost }) {
         </div>
 
         <div className="prodTags">
-          {currentPost.tags.map((tag, index) => (
-            <p key={index}>#{tag}</p>
-          ))}
+          {currentPost.tags ? (
+            currentPost.tags.map((tag, index) => <p key={index}>#{tag}</p>)
+          ) : (
+            <p></p>
+          )}
         </div>
       </div>
-      {/* {al click del bottone per eliminare un post richiamiamo la funzione di fetch per eliminare il post} */}
-      <button onClick={() => fetchDeletePost(currentPost)}>&#128465;</button>
     </li>
   );
 }

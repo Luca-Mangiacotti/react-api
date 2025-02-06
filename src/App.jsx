@@ -4,61 +4,21 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./components/Card";
 
+const initialState = {
+  title: "",
+  content: "",
+  image: "",
+  tags: [""],
+  category: "",
+  available: false,
+};
+
 export default function App() {
-  const [formData, setFormData] = useState({
-    title: "",
-    content: "",
-    image: "",
-    tags: [""],
-    category: "",
-    available: false,
-  });
+  const [formData, setFormData] = useState(initialState);
   const [PostList, setPostList] = useState([]);
 
-  //funzioni di controllo per il form
-  //funzione per la raccolta dati dai campi input
-  const handleFormData = (fieldName, value) => {
-    setFormData((currentData) => ({ ...currentData, [fieldName]: value }));
-  };
-  //funzione per il controllo del submit del form
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    console.log(formData);
-
-    //creo una variabile che conterrà tutte le informazioni del nuovo autore da aggiungere alla lista
-    //usiamo lenght sull'array per ricavarci il numero di id da attribuire al nuovo autore
-    const newpost = {
-      // id: PostList[PostList.length - 1].id + 1,
-      title: formData.title,
-      content: formData.content,
-      image: formData.image,
-      tags: formData.tags,
-      category: formData.category,
-      available: formData.available,
-    };
-
-    console.log(newpost);
-
-    // const fetchStorePost = (newpost) => {
-    //   axios.post("http://127.0.0.1:3001/posts").then(function (res) {
-    //     console.log(res.data);
-    //     console.log("registrato");
-    //   });
-    // };
-
-    setPostList((currentList) => [...currentList, newpost]);
-
-    setFormData({
-      title: "",
-      content: "",
-      image: "",
-      tags: [""],
-      category: "",
-      available: false,
-    });
-    console.log(PostList);
-  };
-
+  //FUNZIONI PER LA GESTIONE DELLA LISTA
+  //--------------------------------------------------------
   //funzione che effettua la chiamata al nostro local host che contiene i dati da visualizzare
   //salviamo i dati ottenuti nella nostra lista creata con useState
   const fetchPosts = () => {
@@ -68,20 +28,40 @@ export default function App() {
     });
   };
 
-  //inserimento funzione per eliminazione di un post dalla lista
+  //--------------------------------------------------------
+  //FUNZIONI CHE GESTISCONO L'ELIMINAZIONE DI UN POST
+  //funzione per l'eliminazione di un post restituita in UI
   const handleDelete = (postToDelete) => {
     setPostList((currentPost) =>
       currentPost.filter((post) => post !== postToDelete)
     );
   };
   //funzione di fetch per eliminare un post dalla lista del nostro server
-  const fetchDeletePost = (post) => {
-    axios.delete(`http://127.0.0.1:3001/posts/${post.id}`).then(function (res) {
-      console.log(`eliminato${res.data}`);
-      //richiamiamo la funzione handleDelete per sincronizzare la UI eliminando l'elemento dalla pagina
-      handleDelete(post);
+  const fetchDeletePost = (currentPost) => {
+    axios
+      .delete(`http://127.0.0.1:3001/posts/${currentPost.id}`)
+      .then(function () {
+        console.log("eliminato");
+        handleDelete(currentPost);
+      });
+  };
+  //---------------------------------------------------------
+  //FUNZIONI CHE GESTISCONO IL CONTROLLO E IL SUBMIT DEL FORM
+  //funzione per la raccolta dati dai campi input
+  const handleFormData = (fieldName, value) => {
+    setFormData((currentData) => ({ ...currentData, [fieldName]: value }));
+  };
+  //funzione per il controllo del submit del form
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    console.log(formData);
+
+    axios.post("http://127.0.0.1:3001/posts", formData).then((res) => {
+      setPostList((currentPosts) => [...currentPosts, res.data]);
+      setFormData(initialState);
     });
   };
+  //-----------------------------------------------------------
 
   //utilizziamo useEffect per richiamare la funzione di restituzione dei post 1 volta all'avvio della pagina UI
   useEffect(fetchPosts, []);
@@ -93,7 +73,12 @@ export default function App() {
 
         <ul>
           {PostList.map((currentPost) => (
-            <Card key={currentPost.id} currentPost={currentPost} />
+            <div key={currentPost.id}>
+              <Card key={currentPost.id} currentPost={currentPost} />
+              <button onClick={() => fetchDeletePost(currentPost)}>
+                &#128465;
+              </button>
+            </div>
           ))}
         </ul>
       </div>
@@ -106,7 +91,7 @@ export default function App() {
           <input
             id="title"
             type="text"
-            value={formData.post}
+            value={formData.title}
             //con l'evento onChange andiamo a richiamare una funzione che a sua volta chiamerà una funzione che si servirà
             //dell' oggetto "event" nel quale andrà a recuperare il valore del campo di input
             onChange={(event) => handleFormData("title", event.target.value)}

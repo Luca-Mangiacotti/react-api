@@ -28,16 +28,11 @@ form {
   border-radius: 18px;
 }
 
-li,
-form {
+form,
+li {
   background-color: #c2ffea;
 }
 
-button:hover {
-  background-color: #cf111c;
-  color: #ffffff;
-  transition: 0.3s;
-}
 /*----------------------
          TYPO        
 -----------------------*/
@@ -56,12 +51,13 @@ ul {
   overflow: hidden;
 }
 
+.cardContainer {
+  background-color: #00bd79;
+}
+
 li {
-  /* display: flex;
-  justify-content: space-between; */
   padding: 8px;
-  margin-bottom: 20px;
-  /* align-items: center; */
+  border-radius: 20px;
 }
 
 li strong {
@@ -94,13 +90,28 @@ li .notAvaible {
 
 button {
   padding: 5px 10px;
-  font-size: 16px;
+  margin-bottom: 20px;
+  margin-top: 5px;
   border-radius: 15px;
   border: transparent;
   background-color: #ffffff;
   text-transform: uppercase;
   color: #cf111c;
   cursor: pointer;
+}
+
+.btnTitle {
+  display: none;
+}
+
+button:hover {
+  background-color: #cf111c;
+  color: #ffffff;
+  transition: 1s;
+}
+
+button:hover .btnTitle {
+  display: inline;
 }
 
 /*----------------------

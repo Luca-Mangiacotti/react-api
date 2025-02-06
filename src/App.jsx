@@ -17,8 +17,8 @@ export default function App() {
   const [formData, setFormData] = useState(initialState);
   const [PostList, setPostList] = useState([]);
 
-  //FUNZIONI PER LA GESTIONE DELLA LISTA
   //--------------------------------------------------------
+  //FUNZIONI PER LA GESTIONE DELLA LISTA
   //funzione che effettua la chiamata al nostro local host che contiene i dati da visualizzare
   //salviamo i dati ottenuti nella nostra lista creata con useState
   const fetchPosts = () => {
@@ -73,9 +73,11 @@ export default function App() {
 
         <ul>
           {PostList.map((currentPost) => (
-            <div key={currentPost.id}>
+            <div className="cardContainer" key={currentPost.id}>
               <Card key={currentPost.id} currentPost={currentPost} />
               <button onClick={() => fetchDeletePost(currentPost)}>
+                cancella{" "}
+                <strong className="btnTitle">{currentPost.title}</strong>{" "}
                 &#128465;
               </button>
             </div>

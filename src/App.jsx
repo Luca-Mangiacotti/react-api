@@ -59,6 +59,7 @@ export default function App() {
     axios.post("http://127.0.0.1:3001/posts", formData).then((res) => {
       setPostList((currentPosts) => [...currentPosts, res.data]);
       setFormData(initialState);
+      console.log(res.data);
     });
   };
   //-----------------------------------------------------------
@@ -98,23 +99,32 @@ export default function App() {
             //dell' oggetto "event" nel quale andrà a recuperare il valore del campo di input
             onChange={(event) => handleFormData("title", event.target.value)}
             placeholder="Inserisci nome Piatto"
+            required
+          />
+          <br />
+          <textarea
+            id="content"
+            type="text"
+            rows="6"
+            cols="30"
+            value={formData.content}
+            onChange={(event) => handleFormData("content", event.target.value)}
+            placeholder="Inserisci qui una descrizione del piatto"
+            required
           />
           <br />
           <input
-            id="content"
             type="text"
-            value={formData.content}
-            onChange={(event) => handleFormData("content", event.target.value)}
-            placeholder="Inserisci dettagli"
+            value={formData.image}
+            onChange={(event) => handleFormData("image", event.target.value)}
+            placeholder="inserisci un url per il tuo piatto "
           />
-          <br />
-
           <select
             id="category"
             value={formData.category}
             onChange={(event) => handleFormData("category", event.target.value)}
           >
-            <option value="" hidden>
+            <option value="" hidden required>
               scegli categoria
             </option>
             <option value="Primi piatti">Primi piatti</option>
@@ -132,8 +142,19 @@ export default function App() {
             onChange={(event) =>
               handleFormData("available", event.target.checked)
             }
+            required
           />
           <br />
+
+          <textarea
+            id="tags"
+            type="text"
+            rows="1"
+            cols="30"
+            value={formData.tags}
+            onChange={(event) => handleFormData("tags", event.target.value)}
+            placeholder="inserisci qui i tag per il piatto"
+          />
 
           <button className="subBtn" type="submit">
             inserisci piatto
